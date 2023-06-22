@@ -33,12 +33,11 @@ public class Cocktail {
 	
 	private String ingrediants;
 	
-	@Embedded
-	@ToString.Exclude
+	
 	@EqualsAndHashCode.Exclude
 	@ManyToOne
 	@JoinColumn(name = "type", nullable = false)
-	private BottleType baseLiqour;
+	private BottleType baseLiqour = new BottleType();
 	
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude

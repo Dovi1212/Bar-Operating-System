@@ -22,19 +22,19 @@ public class BottleTypeService {
 	@Transactional(readOnly = false)
 	public BottleTypeData addNewBottleType(BottleType bottleType) {
 		Long bottleTypeId = bottleType.getBottleTypeId();
-		BottleType dbBottleType = FindOrCreateBottleType(bottleTypeId, bottleType.getType());
-		dbBottleType.setType(bottleType.getType());
+		BottleType dbBottleType = FindOrCreateBottleType(bottleTypeId, bottleType.getName());
+		dbBottleType.setName(bottleType.getName());
 		return new BottleTypeData(bottleTypeDao.save(dbBottleType));
 
 	}
 
-	private BottleType FindOrCreateBottleType(Long bottleTypeId, String type) {
+	private BottleType FindOrCreateBottleType(Long bottleTypeId, String name) {
 		BottleType bottleType;
 		if (Objects.isNull(bottleTypeId)) {
-			Optional<BottleType> opType = bottleTypeDao.findByType(type);
+			Optional<BottleType> opName = bottleTypeDao.findByName(name);
 
-			if (opType.isPresent()) {
-				throw new DuplicateKeyException(type + " already exists in the system.");
+			if (opName.isPresent()) {
+				throw new DuplicateKeyException(name + " already exists in the system.");
 			}
 			bottleType = new BottleType();
 		}

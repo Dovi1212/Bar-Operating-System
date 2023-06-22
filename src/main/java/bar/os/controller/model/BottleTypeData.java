@@ -14,14 +14,14 @@ import lombok.NoArgsConstructor;
 public class BottleTypeData {
 
 	private Long bottleTypeId;
-	private String type;
+	private String name;
 	
 	private Set<CocktailData> cocktails = new HashSet<>();
 	private Set<InventoryData> inventory = new HashSet<>();
 	
 	public BottleTypeData (BottleType bottleType) {
 		this.bottleTypeId = bottleType.getBottleTypeId();
-		this.type = bottleType.getType();
+		this.name = bottleType.getName();
 		
 		for(Cocktail cocktail : bottleType.getCocktails()) {
 			this.cocktails.add(new CocktailData(cocktail));
@@ -34,7 +34,7 @@ public class BottleTypeData {
 	
 	public BottleTypeData (Long bottleTypeId, String type) {
 		this.bottleTypeId = bottleTypeId;
-		this.type = type;
+		this.name = type;
 	}
 	
 	public BottleType toBottleType() {
@@ -42,7 +42,7 @@ public class BottleTypeData {
 		BottleType bottleType = new BottleType();
 		
 		bottleType.setBottleTypeId(bottleTypeId);
-		bottleType.setType(type);
+		bottleType.setName(name);
 		
 		for (CocktailData cocktailData : cocktails) {
 			bottleType.getCocktails().add(cocktailData.toCocktail());

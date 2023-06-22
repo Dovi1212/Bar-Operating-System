@@ -25,7 +25,7 @@ public class BottleTypeController {
 	private BottleTypeService bottleTypeService;
 	
 	
-	@PostMapping("/new")
+	@PostMapping("/add")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public BottleTypeData addNewBottleType (@RequestBody BottleType bottleType) {
 		

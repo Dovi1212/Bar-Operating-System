@@ -21,16 +21,15 @@ import lombok.ToString;
 
 @Data
 @Entity
-@Embeddable
 public class BottleType {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long bottleTypeId;
 	
-	@EqualsAndHashCode.Exclude
+	
 	@Column(unique = true)
-	private String type;
+	private String name;
 	
 	
 	@ToString.Exclude

@@ -1,0 +1,13 @@
+spring:
+   datasource:
+      username: bar_os
+      password: bar_os
+      url: jdbc:mysql://localhost:3307/bar_os
+   jpa:
+      hibernate:
+         ddl-auto: none
+      show-sql: true
+   sql:
+      init:
+         mode: always
+         
