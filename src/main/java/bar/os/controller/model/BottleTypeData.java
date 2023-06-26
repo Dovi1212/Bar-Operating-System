@@ -37,20 +37,5 @@ public class BottleTypeData {
 		this.name = type;
 	}
 	
-	public BottleType toBottleType() {
-		
-		BottleType bottleType = new BottleType();
-		
-		bottleType.setBottleTypeId(bottleTypeId);
-		bottleType.setName(name);
-		
-		for (CocktailData cocktailData : cocktails) {
-			bottleType.getCocktails().add(cocktailData.toCocktail());
-		}
-		
-		for (InventoryData inventoryData : inventory) {
-			bottleType.getInventory().add(inventoryData.toInventory());
-		}
-		return bottleType;
-	}
+
 }

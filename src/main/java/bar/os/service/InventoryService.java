@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import bar.os.controller.model.InventoryData;
+import bar.os.dao.BottleTypeDao;
 import bar.os.dao.InventoryDao;
+import bar.os.entity.BottleType;
 import bar.os.entity.Inventory;
 
 @Service
@@ -21,24 +23,28 @@ public class InventoryService {
 	@Autowired
 	private InventoryDao inventoryDao;
 	
+	@Autowired
+	private BottleTypeDao bottleTypeDao;
+	
 
 	
 	@Transactional(readOnly = false)
-	public InventoryData saveToInventory(InventoryData inventoryData) {
+	public InventoryData saveToInventory(InventoryData inventoryData, String bottleTypeName) {
 		Long inventoryId = inventoryData.getInventoryId();
+		BottleType bottleType = bottleTypeDao.findByName(bottleTypeName);
 		Inventory inventory = FindOrCreateInventory(inventoryId, inventoryData.getName());
 		setFieldsInInventory(inventory, inventoryData);
-		
-		return new InventoryData(inventoryDao.save(inventory));
+		inventory.setBottleType(bottleType);		
+		bottleType.getInventory().add(inventory);
+		Inventory dbInventory = inventoryDao.save(inventory);
+		return new InventoryData(dbInventory);
 	}
 
 	private void setFieldsInInventory(Inventory inventory, InventoryData inventoryData) {
 		inventory.setName(inventoryData.getName());
 		inventory.setCost(inventoryData.getCost());
 		inventory.setSizeInOz(inventoryData.getSizeInOz());
-		inventory.setInventoryId(inventoryData.getInInventory());
-		inventory.setBottleType(inventoryData.getBottleType());
-		
+		inventory.setInInventory(inventoryData.getInInventory());		
 	}
 
 	private Inventory FindOrCreateInventory(Long inventoryId, String name) {
@@ -52,6 +58,7 @@ public class InventoryService {
 			inventory = new Inventory();
 		} else {
 			inventory = findInventoryByName(name);
+			
 		}
 		
 		return inventory;
@@ -87,6 +94,7 @@ public class InventoryService {
 		
 		for(Inventory inventory : inventories) {
 			response.add(new InventoryData(inventory));
+			
 		}
 		return response;
 	}
@@ -96,6 +104,18 @@ public class InventoryService {
 		Inventory inventory = findInventoryByName(name);
 		
 		return new InventoryData(inventory);
+	}
+
+	public InventoryData updateInventory(InventoryData inventoryData, String inventoryName) {
+		Long inventoryId = inventoryData.getInventoryId();
+		BottleType bottleType = bottleTypeDao.findByInventoryName(inventoryName);
+		Inventory inventory = FindOrCreateInventory(inventoryId, inventoryData.getName());
+		setFieldsInInventory(inventory, inventoryData);
+		inventory.setBottleType(bottleType);		
+		bottleType.getInventory().add(inventory);
+		Inventory dbInventory = inventoryDao.save(inventory);
+		return new InventoryData(dbInventory);
+		
 	}
 
 

@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import bar.os.entity.Cocktail;
-import bar.os.entity.Tabs;
+import bar.os.entity.Tab;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,32 +17,21 @@ public class CocktailData {
 	private Long costToCustomer;
 	private String instructions;
 	private String ingrediants;
+	private BottleTypeData baseLiqour = new BottleTypeData();
 	
-	private Set<Tabs> tabs = new HashSet<>();
+	private Set<TabData> tabs = new HashSet<>();
 	
 	public CocktailData (Cocktail cocktail) {
 		this.cocktailId = cocktail.getCocktailId();
-		this.cocktailName = cocktail.getCocktailName();
+		this.cocktailName = cocktail.getName();
 		this.costToCustomer = cocktail.getCostToCustomer();
 		this.instructions = cocktail.getInstructions();
 		this.ingrediants = cocktail.getIngrediants();
 		
-		for(Tabs tab : cocktail.getTabs()) {
-			this.tabs.add(new TabsData(tab));
+		for(Tab tab : cocktail.getTabs()) {
+			this.tabs.add(new TabData(tab));
 		}		
 		
 	}
-	public Cocktail toCocktail() {
-		Cocktail cocktail = new Cocktail();
-		cocktail.setCocktailId(cocktailId);
-		cocktail.setCocktailName(cocktailName);
-		cocktail.setCostToCustomer(costToCustomer);
-		cocktail.setIngrediants(ingrediants);
-		cocktail.setInstructions(instructions);
-		
-		for(TabsData tabsData : tabs) {
-			cocktail.getTabs().add(tabsData.toTabs());
-		}
-		return cocktail;
-	}
+
 }

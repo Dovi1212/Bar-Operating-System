@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import bar.os.controller.model.InventoryData;
+import bar.os.controller.model.InventoryData.InventoryBottleType;
+import bar.os.entity.BottleType;
 import bar.os.service.InventoryService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,20 +29,21 @@ public class InventoryController {
 	@Autowired
 	private InventoryService inventoryService;
 
-	@PostMapping("/{employeeId}/add")
+	@PostMapping("/{employeeId}/add/{bottleTypeName}")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public InventoryData addToInventory(@PathVariable Long employeeId, @RequestBody InventoryData inventoryData) {
+	public InventoryData addToInventory(@PathVariable Long employeeId, @PathVariable String bottleTypeName, @RequestBody InventoryData inventoryData) {
 
 		log.info("Adding {} to inventory", inventoryData);
-		return inventoryService.saveToInventory(inventoryData);
+		return inventoryService.saveToInventory(inventoryData, bottleTypeName);
 	}
 
-	@PutMapping("/{employeeId}/update/{name}")
-	public InventoryData updateInventoryByName(@PathVariable Long employeeId, @PathVariable String name,
-			@RequestBody InventoryData inventoryData) {
-		inventoryData.setInventoryId(inventoryService.getInventoryIdByName(name));
-		log.info("Updating inventory item {} to {}. ", name, inventoryData);
-		return inventoryService.saveToInventory(inventoryData);
+	@PutMapping("/{employeeId}/update/{InventoryName}")
+	public InventoryData updateInventoryByName(@PathVariable Long employeeId, @PathVariable String InventoryName,
+			@RequestBody InventoryData inventoryData) {	
+		inventoryData.setInventoryId(inventoryService.getInventoryIdByName(InventoryName));
+		
+		log.info("Updating inventory item {} to {}. ", InventoryName, inventoryData);
+		return inventoryService.updateInventory(inventoryData, InventoryName);
 
 	}
 

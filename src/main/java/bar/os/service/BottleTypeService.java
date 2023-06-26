@@ -8,12 +8,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import bar.os.controller.model.BottleTypeData;
 import bar.os.dao.BottleTypeDao;
 import bar.os.entity.BottleType;
 
+@Service
 public class BottleTypeService {
 
 	@Autowired
@@ -31,11 +33,7 @@ public class BottleTypeService {
 	private BottleType FindOrCreateBottleType(Long bottleTypeId, String name) {
 		BottleType bottleType;
 		if (Objects.isNull(bottleTypeId)) {
-			Optional<BottleType> opName = bottleTypeDao.findByName(name);
 
-			if (opName.isPresent()) {
-				throw new DuplicateKeyException(name + " already exists in the system.");
-			}
 			bottleType = new BottleType();
 		}
 
@@ -56,8 +54,12 @@ public class BottleTypeService {
 		List<BottleType> bottleTypes = bottleTypeDao.findAll();
 		List<BottleTypeData> response = new LinkedList<>();
 		
-		for(BottleType bottletype : bottleTypes) {
-			response.add(new BottleTypeData(bottletype));
+		for(BottleType bottleType : bottleTypes) {
+			BottleTypeData btd = new BottleTypeData(bottleType);
+			btd.getCocktails().clear();
+			btd.getInventory().clear();
+			response.add(btd);
+			
 		}		
 		return response;
 	}

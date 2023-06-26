@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,33 +16,27 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@Data
 @Entity
-public class Cocktail {
-
+@Data
+public class Tab {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long tabId;
+    
+	private int tax;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long cocktailId;
+	private Long total;
 	
-	private String name;
-	
-	private Long costToCustomer;
-	
-	private String instructions;
-	
-	private String ingrediants;
-	
-	
-	@ToString.Exclude
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "employee_id", nullable = false)
 	@EqualsAndHashCode.Exclude
-	@ManyToOne
-	@JoinColumn(name = "bottle_type_id")
-	BottleType baseLiqour;
-	
 	@ToString.Exclude
+	private Employee employee;
+	
 	@EqualsAndHashCode.Exclude
-	@ManyToMany(mappedBy = "cocktails", cascade = CascadeType.PERSIST)
-	private Set<Tab> tabs = new HashSet<>();
+	@ToString.Exclude
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "tabs_cocktails", joinColumns = @JoinColumn(name = "tab_id"), inverseJoinColumns = @JoinColumn(name = "cocktail_id"))
+	Set<Cocktail> cocktails = new HashSet<>();
 	
 }

@@ -35,11 +35,10 @@ public class CocktailService {
 	}
 
 	private void setFieldsInCocktail(Cocktail cocktail, CocktailData cocktailData) {
-		cocktail.setCocktailName(cocktailData.getCocktailName());
+		cocktail.setName(cocktailData.getCocktailName());
 		cocktail.setCostToCustomer(cocktailData.getCostToCustomer());
 		cocktail.setIngrediants(cocktailData.getIngrediants());
 		cocktail.setInstructions(cocktailData.getInstructions());
-		cocktail.setBaseLiqour(cocktailData.getBaseLiqour);
 	}
 
 	private Cocktail findOrCreateCocktail(Long cocktailId, String cocktailName) {
@@ -86,21 +85,21 @@ public class CocktailService {
 	
 	@Transactional(readOnly = false)
 	public void deleteByName(String name) {
-		Cocktail cocktail = findCocktailByName(name);		
-		
+		Cocktail cocktail = findCocktailByName(name);				
 		cocktailDao.delete(cocktail);
 	}
 	
-	@Transactional(readOnly = true)
-	public List<CocktailData> retrieveAllCocktailsByType(String type) {
-			List<Cocktail> cocktails =cocktailDao.findAllByType(type);
-			List<CocktailData> response = new LinkedList<>();
-			
-			for(Cocktail cocktail : cocktails) {
-				response.add(new CocktailData(cocktail));
-			}
-			
-		return response;
+//	@Transactional(readOnly = true)
+//	public List<CocktailData> retrieveAllCocktailsByType(String type) {
+//			List<Cocktail> cocktails =cocktailDao.findAllByBottleType();
+//			List<CocktailData> response = new LinkedList<>();
+//			
+//			for(Cocktail cocktail : cocktails) {
+//				if (cocktail.getBaseLiqour().equals(type))
+//				response.add(new CocktailData(cocktail));
+//			}
+//			
+//		return response;
 	}
 
-}
+

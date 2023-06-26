@@ -1,7 +1,5 @@
 package bar.os.dao;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import bar.os.entity.BottleType;
@@ -9,8 +7,9 @@ import bar.os.entity.BottleType;
 public interface BottleTypeDao extends JpaRepository<BottleType, Long> {
 
 
-	Optional<BottleType> findByName(String name);
+	BottleType findByName(String name);
 
+	BottleType findByInventoryName(String inventoryName);
 
 	
 

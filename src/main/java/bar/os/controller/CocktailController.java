@@ -57,12 +57,12 @@ public class CocktailController {
 		
 	}
 	
-	@GetMapping("/get/{type}")
-	public List<CocktailData> retrieveAllCocktailsByType(@PathVariable String type) {
-		log.info("Retrieve all cocktails using {}.", type);
-		return cocktailService.retrieveAllCocktailsByType(type);
-		
-	}
+//	@GetMapping("/get/{type}")
+//	public List<CocktailData> retrieveAllCocktailsByType(@PathVariable String type) {
+//		log.info("Retrieve all cocktails using {}.", type);
+//		return cocktailService.retrieveAllCocktailsByType(type);
+//		
+//	}
 	
 	@DeleteMapping("/{employeeId}/delete/{name}")
 	public Map<String, String> deleteCocktailByName(@PathVariable Long employeeId, @PathVariable String name) {

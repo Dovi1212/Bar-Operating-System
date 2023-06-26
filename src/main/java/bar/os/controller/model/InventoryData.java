@@ -14,44 +14,38 @@ public class InventoryData {
 	private Long cost;
 	private Long sizeInOz;
 	private Long inInventory;
-	private BottleType bottleType = new BottleType();
+	private InventoryBottleType bottleType;
 	
 	
 	public InventoryData (Inventory inventory) {
-		this.inventoryId = inventory.getInventoryId();
-		this.name = inventory.getName();
-		this.cost = inventory.getCost();
-		this.sizeInOz = inventory.getSizeInOz();
-		this.inInventory = inventory.getInInventory();
-		this.bottleType = new BottleType();
+		inventoryId = inventory.getInventoryId();
+		name = inventory.getName();
+		cost = inventory.getCost();
+		sizeInOz = inventory.getSizeInOz();
+		inInventory = inventory.getInInventory();
+		bottleType = new InventoryBottleType(inventory.getBottleType());
+
 		
 	}
-	
 	
 	@Data
 	@NoArgsConstructor
-	static class BottleTypeResponse {
+	public static class InventoryBottleType {
 		private Long bottleTypeId;
 		private String name;
 		
-		BottleTypeResponse (BottleType bottleType) {
+		public InventoryBottleType(BottleType bottleType) {
 			bottleTypeId = bottleType.getBottleTypeId();
 			name = bottleType.getName();
+			
 		}
-		
-	}
-
-
-	public Inventory toInventory() {
-		Inventory inventory = new Inventory();
-		inventory.setInventoryId(inventoryId);
-		inventory.setName(name);
-		inventory.setCost(cost);
-		inventory.setSizeInOz(sizeInOz);
-		inventory.setInInventory(inInventory);
-		inventory.setBottleType(bottleType);
-		
-		return inventory;
 	}
 	
-}
+
+		
+	}
+
+
+
+	
+
