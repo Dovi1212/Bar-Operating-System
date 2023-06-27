@@ -14,7 +14,7 @@ CREATE TABLE bottle_type (
 
 CREATE TABLE inventory (
 	inventory_id int NOT NULL AUTO_INCREMENT,
-	bottle_type_id int NOT NULL NOT NULL,
+	bottle_type_id int NOT NULL,
 	name varchar(128) NOT NULL,
 	cost int,
 	size_in_oz int,

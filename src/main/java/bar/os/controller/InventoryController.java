@@ -66,4 +66,11 @@ public class InventoryController {
 		log.info("Retrieving inventory item {}.", name);
 		return inventoryService.retriveItemByName(name);
 	}
+	
+	@GetMapping("/get/{bottleTypeName}")
+	public List<InventoryData> retrieveAllByType(@PathVariable String bottleTypeName){
+		log.info("Retrieving all inventory of type={}", bottleTypeName);
+		return inventoryService.retrieveAllByType(bottleTypeName);
+	}
+	
 }

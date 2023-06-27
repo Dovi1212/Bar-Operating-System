@@ -27,20 +27,20 @@ public class CocktailController {
 	@Autowired
 	private CocktailService cocktailService;
 	
-	@PostMapping("/{employeeId}/create")
+	@PostMapping("/{employeeId}/create/{baseLiqour}")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public CocktailData addCocktail(@PathVariable Long employeeId, @RequestBody CocktailData cocktailData) {
+	public CocktailData addCocktail(@PathVariable Long employeeId, @PathVariable String baseLiqour, @RequestBody CocktailData cocktailData) {
 
 		log.info("Adding {} to cocktail list.", cocktailData);
-		return cocktailService.saveCocktail(cocktailData);
+		return cocktailService.saveCocktail(cocktailData, baseLiqour);
 	}
 	
-	@PutMapping("/{employeeId}/update/{name}")
+	@PutMapping("/{employeeId}/update/{cocktailName}")
 	public CocktailData updateCocktailByName(@PathVariable Long employeeId, @PathVariable String name,
 			@RequestBody CocktailData cocktailData) {
 		cocktailData.setCocktailId(cocktailService.getCocktailIdByName(name));
 		log.info("Updating inventory item {} to {}. ", name, cocktailData);
-		return cocktailService.saveCocktail(cocktailData);
+		return cocktailService.updateCocktail(cocktailData, name);
 
 	}
 	
@@ -52,17 +52,17 @@ public class CocktailController {
 	
 	@GetMapping("/get")
 	public List<CocktailData> retrieveAllCocktails() {
-		log.info("Retrieve all inventory called.");
+		log.info("Retrieve all cocktails called.");
 		return cocktailService.retrieveAllCocktails();
 		
 	}
 	
-//	@GetMapping("/get/{type}")
-//	public List<CocktailData> retrieveAllCocktailsByType(@PathVariable String type) {
-//		log.info("Retrieve all cocktails using {}.", type);
-//		return cocktailService.retrieveAllCocktailsByType(type);
-//		
-//	}
+	@GetMapping("/get_by/{type}")
+	public List<CocktailData> retrieveAllCocktailsByType(@PathVariable String type) {
+		log.info("Retrieve all cocktails using {}.", type);
+		return cocktailService.retrieveAllCocktailsByType(type);
+		
+	}
 	
 	@DeleteMapping("/{employeeId}/delete/{name}")
 	public Map<String, String> deleteCocktailByName(@PathVariable Long employeeId, @PathVariable String name) {

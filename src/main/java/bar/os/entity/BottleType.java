@@ -41,5 +41,4 @@ public class BottleType {
 	@OneToMany(mappedBy = "bottleType", cascade = CascadeType.ALL)
 	private Set<Inventory> inventory = new HashSet<>();
 	
-	
 }

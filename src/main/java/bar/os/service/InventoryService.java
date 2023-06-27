@@ -118,5 +118,17 @@ public class InventoryService {
 		
 	}
 
+	public List<InventoryData> retrieveAllByType(String bottleTypeName) {		
+		List<Inventory> inventories = inventoryDao.findAll();
+		List<InventoryData> response = new LinkedList<>();				
+		for(Inventory inventory : inventories) {
+			if (inventory.getBottleType().getName().equals(bottleTypeName))
+				
+			response.add(new InventoryData(inventory));
+		}
+		
+		return response;
+	}
+
 
 }

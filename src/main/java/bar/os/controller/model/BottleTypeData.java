@@ -22,15 +22,16 @@ public class BottleTypeData {
 	public BottleTypeData (BottleType bottleType) {
 		this.bottleTypeId = bottleType.getBottleTypeId();
 		this.name = bottleType.getName();
-		
-		for(Cocktail cocktail : bottleType.getCocktails()) {
-			this.cocktails.add(new CocktailData(cocktail));
-		}
-		
-		for (Inventory inventory : bottleType.getInventory()) {
-			this.inventory.add(new InventoryData(inventory));
-		}
 	}
+//		
+//		for(Cocktail cocktail : bottleType.getCocktails()) {
+//			this.cocktails.add(new CocktailData(cocktail));
+//		}
+//		
+//		for (Inventory inventory : bottleType.getInventory()) {
+//			this.inventory.add(new InventoryData(inventory));
+//		}
+//	}
 	
 	public BottleTypeData (Long bottleTypeId, String type) {
 		this.bottleTypeId = bottleTypeId;
