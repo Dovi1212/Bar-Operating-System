@@ -36,11 +36,11 @@ public class CocktailController {
 	}
 	
 	@PutMapping("/{employeeId}/update/{cocktailName}")
-	public CocktailData updateCocktailByName(@PathVariable Long employeeId, @PathVariable String name,
+	public CocktailData updateCocktailByName(@PathVariable Long employeeId, @PathVariable String cocktailName,
 			@RequestBody CocktailData cocktailData) {
-		cocktailData.setCocktailId(cocktailService.getCocktailIdByName(name));
-		log.info("Updating inventory item {} to {}. ", name, cocktailData);
-		return cocktailService.updateCocktail(cocktailData, name);
+		cocktailData.setCocktailId(cocktailService.getCocktailIdByName(cocktailName));
+		log.info("Updating cocktail {} to {}. ", cocktailName, cocktailData);
+		return cocktailService.updateCocktail(cocktailData, cocktailName);
 
 	}
 	

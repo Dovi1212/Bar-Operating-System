@@ -20,12 +20,20 @@ public class Cocktail {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cocktailId;
 	
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private String name;
 	
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private Long costToCustomer;
 	
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private String instructions;
 	
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private String ingrediants;
 	
 	

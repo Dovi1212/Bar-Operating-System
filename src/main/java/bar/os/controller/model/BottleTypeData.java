@@ -32,7 +32,7 @@ public class BottleTypeData {
 //			this.inventory.add(new InventoryData(inventory));
 //		}
 //	}
-	
+//	
 	public BottleTypeData (Long bottleTypeId, String type) {
 		this.bottleTypeId = bottleTypeId;
 		this.name = type;

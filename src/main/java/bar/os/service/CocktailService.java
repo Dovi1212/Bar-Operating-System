@@ -112,7 +112,7 @@ public class CocktailService {
 	@Transactional(readOnly = false)
 	public CocktailData updateCocktail(CocktailData cocktailData, String cocktailName) {
 		Long cocktailId = cocktailData.getCocktailId();
-		BottleType baseLiqour = bottleTypeDao.findByCocktailName(cocktailName);
+		BottleType baseLiqour = cocktailDao.findBaseLiqourByCocktailId(cocktailId);
 		Cocktail cocktail = findOrCreateCocktail(cocktailId, cocktailData.getName());
 		setFieldsInCocktail(cocktail, cocktailData);
 		cocktail.setBaseLiqour(baseLiqour);
