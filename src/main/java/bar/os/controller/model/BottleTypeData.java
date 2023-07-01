@@ -1,4 +1,5 @@
 package bar.os.controller.model;
+//Author David Atwood and Svitlana Leven
 
 import java.util.HashSet;
 import java.util.Set;

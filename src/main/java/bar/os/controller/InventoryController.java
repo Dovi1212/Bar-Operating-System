@@ -1,4 +1,5 @@
 package bar.os.controller;
+//Author David Atwood
 
 import java.util.List;
 import java.util.Map;
@@ -32,14 +33,15 @@ public class InventoryController {
 	@PostMapping("/{employeeId}/add/{bottleTypeName}")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public InventoryData addToInventory(@PathVariable Long employeeId, @PathVariable String bottleTypeName, @RequestBody InventoryData inventoryData) {
-
+		inventoryService.checkRole(employeeId);
 		log.info("Adding {} to inventory", inventoryData);
 		return inventoryService.saveToInventory(inventoryData, bottleTypeName);
 	}
 
 	@PutMapping("/{employeeId}/update/{InventoryName}")
 	public InventoryData updateInventoryByName(@PathVariable Long employeeId, @PathVariable String InventoryName,
-			@RequestBody InventoryData inventoryData) {	
+			@RequestBody InventoryData inventoryData) {
+		inventoryService.checkRole(employeeId);
 		inventoryData.setInventoryId(inventoryService.getInventoryIdByName(InventoryName));
 		
 		log.info("Updating inventory item {} to {}. ", InventoryName, inventoryData);
@@ -49,6 +51,7 @@ public class InventoryController {
 
 	@DeleteMapping("/{employeeId}/delete/{name}")
 	public Map<String, String> deleteInventoryItemByName(@PathVariable Long employeeId, @PathVariable String name) {
+		inventoryService.checkRole(employeeId);
 		log.info("Deleting {} from inventory", name);
 		inventoryService.deleteByName(name);
 		return Map.of("Message", "Deletion of " + name + " from inventory was successful.");

@@ -1,4 +1,5 @@
 package bar.os.controller.model;
+//Author David Atwood
 
 import bar.os.entity.BottleType;
 import bar.os.entity.Inventory;

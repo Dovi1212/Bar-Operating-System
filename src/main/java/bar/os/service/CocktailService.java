@@ -1,4 +1,5 @@
 package bar.os.service;
+//Author David Atwood
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ import bar.os.controller.model.CocktailData;
 import bar.os.controller.model.InventoryData;
 import bar.os.dao.BottleTypeDao;
 import bar.os.dao.CocktailDao;
+import bar.os.dao.EmployeeDao;
 import bar.os.dao.InventoryDao;
 import bar.os.entity.BottleType;
 import bar.os.entity.Cocktail;
@@ -28,6 +30,9 @@ public class CocktailService {
 	
 	@Autowired
 	private BottleTypeDao bottleTypeDao;
+	
+	@Autowired
+	private EmployeeDao employeeDao;
 
 	@Transactional(readOnly = false)
 	public CocktailData saveCocktail(CocktailData cocktailData, String baseLiqour) {
@@ -111,14 +116,22 @@ public class CocktailService {
 
 	@Transactional(readOnly = false)
 	public CocktailData updateCocktail(CocktailData cocktailData, String cocktailName) {
-		Long cocktailId = cocktailData.getCocktailId();
-		BottleType baseLiqour = cocktailDao.findBaseLiqourByCocktailId(cocktailId);
-		Cocktail cocktail = findOrCreateCocktail(cocktailId, cocktailData.getName());
+		Long cocktailId = cocktailData.getCocktailId();		
+		Cocktail cocktail = findOrCreateCocktail(cocktailId, cocktailData.getName());	
+		BottleType bottleType = cocktail.getBaseLiqour();
 		setFieldsInCocktail(cocktail, cocktailData);
-		cocktail.setBaseLiqour(baseLiqour);
-		baseLiqour.getCocktails().add(cocktail);
+		cocktail.setBaseLiqour(bottleType);
+		bottleType.getCocktails().add(cocktail);
 		Cocktail dbCocktail = cocktailDao.save(cocktail);	
 		return new CocktailData(dbCocktail);
+	}
+
+	public void checkRole(Long employeeId) {
+		String employeeRole = employeeDao.findEmployeeRoleByID(employeeId);
+			if(!employeeRole.equals("manager")) {
+				throw new UnsupportedOperationException("You do not have permissions for this operation");
+			}
+		
 	}
 
 }

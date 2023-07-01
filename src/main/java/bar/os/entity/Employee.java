@@ -21,10 +21,10 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long employeeId;
 	
-	private String employeeFirstName;
-	private String employeeLastName;
-	private String employeeEmail;
-	private String employeeEmployeeRole;
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String employeeRole;
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude

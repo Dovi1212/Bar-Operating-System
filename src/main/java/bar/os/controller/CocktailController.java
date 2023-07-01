@@ -1,4 +1,5 @@
 package bar.os.controller;
+//Author David Atwood
 
 import java.util.List;
 import java.util.Map;
@@ -29,8 +30,8 @@ public class CocktailController {
 	
 	@PostMapping("/{employeeId}/create/{baseLiqour}")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public CocktailData addCocktail(@PathVariable Long employeeId, @PathVariable String baseLiqour, @RequestBody CocktailData cocktailData) {
-
+	public CocktailData addCocktail(@PathVariable Long employeeId, @PathVariable String baseLiqour, @RequestBody CocktailData cocktailData) {		
+		cocktailService.checkRole(employeeId);
 		log.info("Adding {} to cocktail list.", cocktailData);
 		return cocktailService.saveCocktail(cocktailData, baseLiqour);
 	}
@@ -38,6 +39,7 @@ public class CocktailController {
 	@PutMapping("/{employeeId}/update/{cocktailName}")
 	public CocktailData updateCocktailByName(@PathVariable Long employeeId, @PathVariable String cocktailName,
 			@RequestBody CocktailData cocktailData) {
+		cocktailService.checkRole(employeeId);
 		cocktailData.setCocktailId(cocktailService.getCocktailIdByName(cocktailName));
 		log.info("Updating cocktail {} to {}. ", cocktailName, cocktailData);
 		return cocktailService.updateCocktail(cocktailData, cocktailName);
@@ -66,6 +68,7 @@ public class CocktailController {
 	
 	@DeleteMapping("/{employeeId}/delete/{name}")
 	public Map<String, String> deleteCocktailByName(@PathVariable Long employeeId, @PathVariable String name) {
+		cocktailService.checkRole(employeeId);
 		log.info("Deleting {} from cocktail list.", name);
 		cocktailService.deleteByName(name);
 		return Map.of("Message", "Deletion of " + name + " from cocktail list was successful.");

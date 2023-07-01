@@ -1,4 +1,5 @@
 package bar.os.entity;
+//Author David Atwood
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

@@ -1,4 +1,5 @@
 package bar.os.service;
+//Author David Atwood
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import bar.os.controller.model.InventoryData;
 import bar.os.dao.BottleTypeDao;
+import bar.os.dao.EmployeeDao;
 import bar.os.dao.InventoryDao;
 import bar.os.entity.BottleType;
 import bar.os.entity.Inventory;
@@ -25,6 +27,9 @@ public class InventoryService {
 	
 	@Autowired
 	private BottleTypeDao bottleTypeDao;
+	
+	@Autowired
+	private EmployeeDao employeeDao;
 	
 
 	
@@ -128,6 +133,13 @@ public class InventoryService {
 		}
 		
 		return response;
+	}
+
+	public void checkRole(Long employeeId) {
+		String employeeRole = employeeDao.findEmployeeRoleByID(employeeId);
+		if(!employeeRole.equals("manager")) {
+			throw new UnsupportedOperationException("You do not have permissions for this operation");
+		}
 	}
 
 
