@@ -16,14 +16,15 @@ public class BottleTypeData {
 
 	private Long bottleTypeId;
 	private String name;
-	
+
 	private Set<CocktailData> cocktails = new HashSet<>();
 	private Set<InventoryData> inventory = new HashSet<>();
-	
-	public BottleTypeData (BottleType bottleType) {
+
+	public BottleTypeData(BottleType bottleType) {
 		this.bottleTypeId = bottleType.getBottleTypeId();
 		this.name = bottleType.getName();
 	}
+
 //		
 //		for(Cocktail cocktail : bottleType.getCocktails()) {
 //			this.cocktails.add(new CocktailData(cocktail));
@@ -34,10 +35,9 @@ public class BottleTypeData {
 //		}
 //	}
 //	
-	public BottleTypeData (Long bottleTypeId, String type) {
+	public BottleTypeData(Long bottleTypeId, String type) {
 		this.bottleTypeId = bottleTypeId;
 		this.name = type;
 	}
-	
 
 }

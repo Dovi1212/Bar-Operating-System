@@ -49,19 +49,19 @@ public class BottleTypeService {
 		return bottleTypeDao.findById(bottleTypeId).orElseThrow(
 				() -> new NoSuchElementException("Bottle type with ID=" + bottleTypeId + " does not exist"));
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<BottleTypeData> getAllBottleTypes() {
 		List<BottleType> bottleTypes = bottleTypeDao.findAll();
 		List<BottleTypeData> response = new LinkedList<>();
-		
-		for(BottleType bottleType : bottleTypes) {
+
+		for (BottleType bottleType : bottleTypes) {
 			BottleTypeData btd = new BottleTypeData(bottleType);
 			btd.getCocktails().clear();
 			btd.getInventory().clear();
 			response.add(btd);
-			
-		}		
+
+		}
 		return response;
 	}
 

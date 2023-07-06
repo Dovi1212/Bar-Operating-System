@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS tabs_cocktail;
-DROP TABLE IF EXISTS tabs;
+DROP TABLE IF EXISTS tab_cocktail;
+DROP TABLE IF EXISTS tab;
 DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS cocktail;
 DROP TABLE IF EXISTS inventory;
@@ -44,18 +44,18 @@ CREATE TABLE cocktail (
 	FOREIGN KEY (bottle_type_id) REFERENCES bottle_type (bottle_type_id) ON DELETE CASCADE
 );
 
-CREATE TABLE tabs (
-	tabs_id int NOT NULL AUTO_INCREMENT,
+CREATE TABLE tab (
+	tab_id int NOT NULL AUTO_INCREMENT,
 	employee_id int NOT NULL,
 	tax int NOT NULL,
 	total decimal (10, 2) NOT NULL,
-	PRIMARY KEY(tabs_id),
+	PRIMARY KEY(tab_id),
 	FOREIGN KEY (employee_id) REFERENCES employee (employee_id) ON DELETE CASCADE
 );
 
-CREATE TABLE tabs_cocktail (
-	tabs_id int NOT NULL,
+CREATE TABLE tab_cocktail (
+	tab_id int NOT NULL,
 	cocktail_id int NOT NULL,
-	FOREIGN KEY (tabs_id) REFERENCES tabs (tabs_id) ON DELETE CASCADE,
+	FOREIGN KEY (tab_id) REFERENCES tab (tab_id) ON DELETE CASCADE,
 	FOREIGN KEY (cocktail_id) REFERENCES cocktail (cocktail_id) ON DELETE CASCADE
 );

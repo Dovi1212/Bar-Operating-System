@@ -21,25 +21,22 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/bottle_type")
 @Slf4j
 public class BottleTypeController {
-	
+
 	@Autowired
 	private BottleTypeService bottleTypeService;
-	
-	
-	
-	
+
 	@PostMapping("/add")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public BottleTypeData addNewBottleType (@RequestBody BottleType bottleType) {
-		
+	public BottleTypeData addNewBottleType(@RequestBody BottleType bottleType) {
+
 		log.info("Adding new bottle type {}", bottleType);
 		return bottleTypeService.addNewBottleType(bottleType);
 	}
-	
+
 	@GetMapping("/get_all")
 	public List<BottleTypeData> getAllBottleTypes() {
 		log.info("Getting all bottle types");
 		return bottleTypeService.getAllBottleTypes();
 	}
-	
+
 }

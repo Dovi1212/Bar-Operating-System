@@ -1,4 +1,5 @@
 package bar.os.entity;
+//Author Svitlana Leven
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,24 +20,21 @@ import lombok.ToString;
 @Entity
 @Data
 public class Tab {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long tabId;
-    
-	private int tax;
-	
+	private Long tax;
 	private Long total;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "employee_id", nullable = false)
+
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "employee_id", nullable = false)
 	private Employee employee;
-	
+
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "tabs_cocktails", joinColumns = @JoinColumn(name = "tab_id"), inverseJoinColumns = @JoinColumn(name = "cocktail_id"))
+	@JoinTable(name = "tab_cocktail", joinColumns = @JoinColumn(name = "tab_id"), inverseJoinColumns = @JoinColumn(name = "cocktail_id"))
 	Set<Cocktail> cocktails = new HashSet<>();
-	
 }

@@ -17,6 +17,7 @@ import bar.os.dao.BottleTypeDao;
 import bar.os.dao.EmployeeDao;
 import bar.os.dao.InventoryDao;
 import bar.os.entity.BottleType;
+import bar.os.entity.Employee;
 import bar.os.entity.Inventory;
 
 @Service
@@ -24,22 +25,20 @@ public class InventoryService {
 
 	@Autowired
 	private InventoryDao inventoryDao;
-	
+
 	@Autowired
 	private BottleTypeDao bottleTypeDao;
-	
+
 	@Autowired
 	private EmployeeDao employeeDao;
-	
 
-	
 	@Transactional(readOnly = false)
 	public InventoryData saveToInventory(InventoryData inventoryData, String bottleTypeName) {
 		Long inventoryId = inventoryData.getInventoryId();
 		BottleType bottleType = bottleTypeDao.findByName(bottleTypeName);
 		Inventory inventory = FindOrCreateInventory(inventoryId, inventoryData.getName());
 		setFieldsInInventory(inventory, inventoryData);
-		inventory.setBottleType(bottleType);		
+		inventory.setBottleType(bottleType);
 		bottleType.getInventory().add(inventory);
 		Inventory dbInventory = inventoryDao.save(inventory);
 		return new InventoryData(dbInventory);
@@ -49,12 +48,12 @@ public class InventoryService {
 		inventory.setName(inventoryData.getName());
 		inventory.setCost(inventoryData.getCost());
 		inventory.setSizeInOz(inventoryData.getSizeInOz());
-		inventory.setInInventory(inventoryData.getInInventory());		
+		inventory.setInInventory(inventoryData.getInInventory());
 	}
 
 	private Inventory FindOrCreateInventory(Long inventoryId, String name) {
 		Inventory inventory;
-		
+
 		if (Objects.isNull(inventoryId)) {
 			Optional<Inventory> opInventory = inventoryDao.findInventoryByName(name);
 			if (opInventory.isPresent()) {
@@ -63,23 +62,22 @@ public class InventoryService {
 			inventory = new Inventory();
 		} else {
 			inventory = findInventoryByName(name);
-			
+
 		}
-		
+
 		return inventory;
 	}
 
-	private Inventory findInventoryByName(String name) {			
-		return inventoryDao.findInventoryByName(name).orElseThrow(() -> new NoSuchElementException("Inventory item with the name " + name + "doesnt exist"));
+	private Inventory findInventoryByName(String name) {
+		return inventoryDao.findInventoryByName(name)
+				.orElseThrow(() -> new NoSuchElementException("Inventory item with the name " + name + "doesnt exist"));
 	}
-	
+
 	@Transactional(readOnly = false)
 	public InventoryData updateItemByName() {
-		
+
 		return null;
 	}
-
-
 
 	public Long getInventoryIdByName(String name) {
 		Long response = findInventoryByName(name).getInventoryId();
@@ -96,10 +94,10 @@ public class InventoryService {
 	public List<InventoryData> retrieveAllInventory() {
 		List<Inventory> inventories = inventoryDao.findAll();
 		List<InventoryData> response = new LinkedList<>();
-		
-		for(Inventory inventory : inventories) {
+
+		for (Inventory inventory : inventories) {
 			response.add(new InventoryData(inventory));
-			
+
 		}
 		return response;
 	}
@@ -107,7 +105,7 @@ public class InventoryService {
 	@Transactional(readOnly = true)
 	public InventoryData retriveItemByName(String name) {
 		Inventory inventory = findInventoryByName(name);
-		
+
 		return new InventoryData(inventory);
 	}
 
@@ -116,31 +114,30 @@ public class InventoryService {
 		BottleType bottleType = bottleTypeDao.findByInventoryName(inventoryName);
 		Inventory inventory = FindOrCreateInventory(inventoryId, inventoryData.getName());
 		setFieldsInInventory(inventory, inventoryData);
-		inventory.setBottleType(bottleType);		
+		inventory.setBottleType(bottleType);
 		bottleType.getInventory().add(inventory);
 		Inventory dbInventory = inventoryDao.save(inventory);
 		return new InventoryData(dbInventory);
-		
+
 	}
 
-	public List<InventoryData> retrieveAllByType(String bottleTypeName) {		
+	public List<InventoryData> retrieveAllByType(String bottleTypeName) {
 		List<Inventory> inventories = inventoryDao.findAll();
-		List<InventoryData> response = new LinkedList<>();				
-		for(Inventory inventory : inventories) {
+		List<InventoryData> response = new LinkedList<>();
+		for (Inventory inventory : inventories) {
 			if (inventory.getBottleType().getName().equals(bottleTypeName))
-				
-			response.add(new InventoryData(inventory));
+
+				response.add(new InventoryData(inventory));
 		}
-		
+
 		return response;
 	}
 
 	public void checkRole(Long employeeId) {
-		String employeeRole = employeeDao.findEmployeeRoleByID(employeeId);
-		if(!employeeRole.equals("manager")) {
+		Employee employee = employeeDao.findEmployeeByEmployeeId(employeeId);
+		if (!employee.getEmployeeRole().equals("manager")) {
 			throw new UnsupportedOperationException("You do not have permissions for this operation");
 		}
 	}
-
 
 }

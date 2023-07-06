@@ -32,7 +32,8 @@ public class InventoryController {
 
 	@PostMapping("/{employeeId}/add/{bottleTypeName}")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public InventoryData addToInventory(@PathVariable Long employeeId, @PathVariable String bottleTypeName, @RequestBody InventoryData inventoryData) {
+	public InventoryData addToInventory(@PathVariable Long employeeId, @PathVariable String bottleTypeName,
+			@RequestBody InventoryData inventoryData) {
 		inventoryService.checkRole(employeeId);
 		log.info("Adding {} to inventory", inventoryData);
 		return inventoryService.saveToInventory(inventoryData, bottleTypeName);
@@ -43,7 +44,7 @@ public class InventoryController {
 			@RequestBody InventoryData inventoryData) {
 		inventoryService.checkRole(employeeId);
 		inventoryData.setInventoryId(inventoryService.getInventoryIdByName(InventoryName));
-		
+
 		log.info("Updating inventory item {} to {}. ", InventoryName, inventoryData);
 		return inventoryService.updateInventory(inventoryData, InventoryName);
 
@@ -61,19 +62,19 @@ public class InventoryController {
 	public List<InventoryData> retrieveAllInventory(@PathVariable Long employeeId) {
 		log.info("Retrieve all inventory called.");
 		return inventoryService.retrieveAllInventory();
-		
+
 	}
-	
+
 	@GetMapping("{employeeId}/get/{name}")
 	public InventoryData retrieveInventoryByName(@PathVariable Long employeeId, @PathVariable String name) {
 		log.info("Retrieving inventory item {}.", name);
 		return inventoryService.retriveItemByName(name);
 	}
-	
+
 	@GetMapping("/get/{bottleTypeName}")
-	public List<InventoryData> retrieveAllByType(@PathVariable String bottleTypeName){
+	public List<InventoryData> retrieveAllByType(@PathVariable String bottleTypeName) {
 		log.info("Retrieving all inventory of type={}", bottleTypeName);
 		return inventoryService.retrieveAllByType(bottleTypeName);
 	}
-	
+
 }

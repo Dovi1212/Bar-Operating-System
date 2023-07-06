@@ -1,4 +1,5 @@
 package bar.os.controller.model;
+//Author Svitlana Leven
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,22 +14,34 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TabData {
 
-	
-	private Long tabId;    
-	private int tax;	
+	private Long tabId;
+	private Long tax;
 	private Long total;
-	private Employee employee;
-	
+	private TabEmployee employee;
 
 	Set<CocktailData> cocktails = new HashSet<>();
-	
-	public TabData (Tab tab) {
+
+	public TabData(Tab tab) {
 		tabId = tab.getTabId();
 		tax = tab.getTax();
 		total = tab.getTotal();
-		
+		employee = new TabEmployee(tab.getEmployee());
+
 		for (Cocktail cocktail : tab.getCocktails()) {
 			cocktails.add(new CocktailData(cocktail));
 		}
 	}
+	
+	@Data
+	@NoArgsConstructor
+	public static class TabEmployee {
+		private Long employeeId;
+		private String firstName;
+		
+		public TabEmployee(Employee employee) {
+			employeeId = employee.getEmployeeId();
+			firstName = employee.getFirstName();
+		}
+	}
+	
 }

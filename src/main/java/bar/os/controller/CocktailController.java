@@ -24,18 +24,19 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/cocktail")
 @Slf4j
 public class CocktailController {
-	
+
 	@Autowired
 	private CocktailService cocktailService;
-	
+
 	@PostMapping("/{employeeId}/create/{baseLiqour}")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public CocktailData addCocktail(@PathVariable Long employeeId, @PathVariable String baseLiqour, @RequestBody CocktailData cocktailData) {		
+	public CocktailData addCocktail(@PathVariable Long employeeId, @PathVariable String baseLiqour,
+			@RequestBody CocktailData cocktailData) {
 		cocktailService.checkRole(employeeId);
 		log.info("Adding {} to cocktail list.", cocktailData);
 		return cocktailService.saveCocktail(cocktailData, baseLiqour);
 	}
-	
+
 	@PutMapping("/{employeeId}/update/{cocktailName}")
 	public CocktailData updateCocktailByName(@PathVariable Long employeeId, @PathVariable String cocktailName,
 			@RequestBody CocktailData cocktailData) {
@@ -45,27 +46,27 @@ public class CocktailController {
 		return cocktailService.updateCocktail(cocktailData, cocktailName);
 
 	}
-	
+
 	@GetMapping("/get/{name}")
 	public CocktailData retrieveCocktailByName(@PathVariable String name) {
 		log.info("Retrieving cocktail {}.", name);
 		return cocktailService.retriveCocktailByName(name);
 	}
-	
+
 	@GetMapping("/get")
 	public List<CocktailData> retrieveAllCocktails() {
 		log.info("Retrieve all cocktails called.");
 		return cocktailService.retrieveAllCocktails();
-		
+
 	}
-	
+
 	@GetMapping("/get_by/{type}")
 	public List<CocktailData> retrieveAllCocktailsByType(@PathVariable String type) {
 		log.info("Retrieve all cocktails using {}.", type);
 		return cocktailService.retrieveAllCocktailsByType(type);
-		
+
 	}
-	
+
 	@DeleteMapping("/{employeeId}/delete/{name}")
 	public Map<String, String> deleteCocktailByName(@PathVariable Long employeeId, @PathVariable String name) {
 		cocktailService.checkRole(employeeId);
@@ -74,6 +75,4 @@ public class CocktailController {
 		return Map.of("Message", "Deletion of " + name + " from cocktail list was successful.");
 	}
 
-	
-	
 }

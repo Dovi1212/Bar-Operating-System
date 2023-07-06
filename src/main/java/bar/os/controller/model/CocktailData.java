@@ -30,7 +30,7 @@ public class CocktailData {
 		instructions = cocktail.getInstructions();
 		ingrediants = cocktail.getIngrediants();
 		baseLiqour = new CocktailBottleType(cocktail.getBaseLiqour());
-		}	
+	}
 
 	@Data
 	@NoArgsConstructor
@@ -38,10 +38,10 @@ public class CocktailData {
 		private Long baseLiqourId;
 		private String name;
 
-		public CocktailBottleType(BottleType bottleType) {		
+		public CocktailBottleType(BottleType bottleType) {
 			baseLiqourId = bottleType.getBottleTypeId();
 			name = bottleType.getName();
-			
+
 		}
 	}
 }

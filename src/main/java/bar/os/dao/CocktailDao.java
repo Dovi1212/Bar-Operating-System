@@ -19,6 +19,8 @@ public interface CocktailDao extends JpaRepository<Cocktail, Long> {
 
 	BottleType findBaseLiqourByCocktailId(Long cocktailId);
 
+	Cocktail findByName(String cocktailName);
+
 
 
 

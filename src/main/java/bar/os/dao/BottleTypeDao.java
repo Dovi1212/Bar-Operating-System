@@ -1,5 +1,6 @@
 package bar.os.dao;
-//Author David Atwood
+//Author David Atwood and  Svitlana Leven
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
